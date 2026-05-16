@@ -220,7 +220,7 @@ function playFinish() {
 // ── State ─────────────────────────────────────────────────────
 const state = {
   difficulty:      'medium',
-  timeLimit:       60,
+  timeLimit:       30,
   text:            '',
   started:         false,
   finished:        false,
@@ -707,7 +707,7 @@ function applySound(on) {
   state.sound = on;
   localStorage.setItem('ts_sound', on ? 'on' : 'off');
   soundBtn.classList.toggle('active', on);
-  soundBtn.textContent = on ? 'SFX' : 'SFX';
+  soundBtn.textContent = on ? 'SFX' : 'MUT';
   soundBtn.title = on ? 'Sound ON — click to mute' : 'Sound OFF — click to enable';
   soundBtn.style.opacity = on ? '1' : '0.45';
 }
@@ -843,9 +843,11 @@ function initApp() {
   ringFill.style.strokeDasharray  = RING_CIRCUMFERENCE;
   ringFill.style.strokeDashoffset = '0';
 
-  // Default: medium diff / 60s
+  // Default: medium diff / 30s
   activatePill(diffGroup, '[data-diff="medium"]');
   state.difficulty = 'medium';
+  activatePill(timeGroup, '[data-time="30"]');
+  state.timeLimit = 30;
   timerLive.textContent = state.timeLimit;
 
   loadText();

@@ -201,7 +201,6 @@ body::after {
   z-index: 0;
 }
 
-/* vignette */
 body > .ambient-orbs ~ * { position: relative; z-index: 1; }
 
 /* ── Ambient orbs ─────────────────────────────────────────────── */
@@ -279,7 +278,7 @@ body > .ambient-orbs ~ * { position: relative; z-index: 1; }
 }
 
 @keyframes blink {
-  0%, 100% { background: var(--accent); box-shadow: 0 0 10px rgba(252,225,0,0.7); }
+  0%, 100% { background: var(--accent); box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 70%, transparent); }
   50%       { background: transparent; box-shadow: none; }
 }
 
@@ -293,10 +292,10 @@ body > .ambient-orbs ~ * { position: relative; z-index: 1; }
 }
 
 @keyframes card-glitch {
-  0%   { transform: translateX(-3px) skewX(-0.5deg); border-color: rgba(255,45,120,0.7); box-shadow: -4px 0 0 rgba(255,45,120,0.4), 4px 0 0 rgba(0,240,255,0.4); }
+  0%   { transform: translateX(-3px) skewX(-0.5deg); border-color: color-mix(in srgb, var(--incorrect) 70%, transparent); box-shadow: -4px 0 0 color-mix(in srgb, var(--incorrect) 40%, transparent), 4px 0 0 color-mix(in srgb, var(--accent-2) 40%, transparent); }
   35%  { transform: translateX(3px)  skewX(0.5deg);  }
   70%  { transform: translateX(-1px); }
-  100% { transform: none; border-color: rgba(252,225,0,0.12); box-shadow: none; }
+  100% { transform: none; border-color: color-mix(in srgb, var(--accent) 12%, transparent); box-shadow: none; }
 }
 
 @keyframes combo-pop {
@@ -381,12 +380,12 @@ body > .ambient-orbs ~ * { position: relative; z-index: 1; }
   font-size: 0.72rem;
   color: var(--correct);
   letter-spacing: 1px;
-  text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--correct) 50%, transparent);
 }
 
 .boot-bar-wrap {
   height: 2px;
-  background: rgba(252, 225, 0, 0.1);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
   position: relative;
 }
 
@@ -395,7 +394,7 @@ body > .ambient-orbs ~ * { position: relative; z-index: 1; }
   width: 0%;
   background: linear-gradient(90deg, var(--accent-2), var(--accent));
   transition: width 0.25s ease;
-  box-shadow: 0 0 8px rgba(252, 225, 0, 0.6);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 60%, transparent);
 }
 
 /* ── Header ──────────────────────────────────────────────────── */
@@ -477,7 +476,7 @@ nav {
   clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
 }
 
-.nav-btn:hover { color: var(--accent); background: rgba(252, 225, 0, 0.05); }
+.nav-btn:hover { color: var(--accent); background: color-mix(in srgb, var(--accent) 5%, transparent); }
 
 .nav-btn.active {
   color: #000;
@@ -532,15 +531,15 @@ nav {
 
 .pill:hover {
   color: var(--accent);
-  border-color: rgba(252, 225, 0, 0.35);
-  background: rgba(252, 225, 0, 0.05);
+  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
 }
 
 .pill.active {
   background: var(--accent);
   border-color: var(--accent);
   color: #000;
-  box-shadow: 0 0 18px rgba(252, 225, 0, 0.45);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 45%, transparent);
 }
 
 /* ── Toolbar ─────────────────────────────────────────────────── */
@@ -572,12 +571,12 @@ nav {
   clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
 }
 
-.btn-sound:hover { color: var(--accent); border-color: rgba(252, 225, 0, 0.35); }
+.btn-sound:hover { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 35%, transparent); }
 
 .btn-sound.active {
   color: var(--accent-2);
   border-color: var(--accent-2);
-  box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--accent-2) 25%, transparent);
 }
 
 /* ── Stats bar ───────────────────────────────────────────────── */
@@ -608,7 +607,7 @@ nav {
   align-items: center;
   gap: 4px;
   padding: 18px 20px;
-  border-right: 1px solid rgba(252, 225, 0, 0.07);
+  border-right: 1px solid color-mix(in srgb, var(--accent) 7%, transparent);
 }
 
 .stat:last-child { border-right: none; }
@@ -674,10 +673,9 @@ nav {
   overflow: visible;
 }
 
-/* rotate only the ring circles, not the whole SVG */
 .timer-svg .ring-group { transform-origin: 50px 50px; transform: rotate(-90deg); }
 
-.ring-bg   { fill: none; stroke: rgba(252, 225, 0, 0.08); stroke-width: 4; }
+.ring-bg   { fill: none; stroke: color-mix(in srgb, var(--accent) 8%, transparent); stroke-width: 4; }
 .ring-fill {
   fill: none;
   stroke: var(--ring-color);
@@ -697,7 +695,6 @@ nav {
   text-shadow: var(--glow-y);
   transition: color 0.2s, text-shadow 0.2s;
   line-height: 1;
-  /* nudge left by half the tracking we'd otherwise add */
   margin-right: 0;
 }
 
@@ -719,7 +716,7 @@ nav {
   gap: 14px;
   position: relative;
   box-shadow:
-    0 0 0 1px rgba(0, 240, 255, 0.05) inset,
+    0 0 0 1px color-mix(in srgb, var(--accent-2) 5%, transparent) inset,
     0 0 40px rgba(80, 40, 160, 0.08) inset,
     var(--shadow);
   transition: border-color 0.15s, box-shadow 0.15s;
@@ -824,21 +821,21 @@ nav {
 
 .text-display .char.correct {
   color: var(--correct);
-  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--correct) 50%, transparent);
 }
 
 .text-display .char.incorrect {
   color: var(--incorrect);
   text-decoration: underline wavy var(--incorrect);
   text-underline-offset: 4px;
-  text-shadow: 0 0 10px rgba(255, 45, 120, 0.55);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--incorrect) 55%, transparent);
 }
 
 .text-display .char.active {
   color: #000;
   background: var(--accent);
   border-bottom: none;
-  box-shadow: 0 0 16px rgba(252, 225, 0, 0.75);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 75%, transparent);
   animation: blink 1s step-end infinite;
 }
 
@@ -891,9 +888,9 @@ nav {
 .input-area::placeholder { color: var(--text-muted); }
 
 .input-area:focus {
-  border-color: rgba(252, 225, 0, 0.4);
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
   border-bottom-color: var(--accent);
-  box-shadow: 0 0 24px rgba(252, 225, 0, 0.1), inset 0 0 16px rgba(252, 225, 0, 0.03);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--accent) 10%, transparent), inset 0 0 16px color-mix(in srgb, var(--accent) 3%, transparent);
 }
 
 /* ── Test actions ────────────────────────────────────────────── */
@@ -901,7 +898,7 @@ nav {
 
 .btn-ghost {
   background: transparent;
-  border: 1px solid rgba(252, 225, 0, 0.18);
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
   color: var(--text-muted);
   font-family: var(--font-ui);
   font-size: 0.82rem;
@@ -917,14 +914,14 @@ nav {
 .btn-ghost:hover {
   color: var(--accent);
   border-color: var(--accent);
-  background: rgba(252, 225, 0, 0.05);
-  box-shadow: 0 0 16px rgba(252, 225, 0, 0.18);
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
 .btn-ghost.danger:hover {
   color: var(--incorrect);
   border-color: var(--incorrect);
-  box-shadow: 0 0 16px rgba(255, 45, 120, 0.2);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--incorrect) 20%, transparent);
 }
 
 .btn-sm { font-size: 0.75rem; padding: 5px 14px; }
@@ -938,8 +935,8 @@ nav {
 }
 
 .hint kbd {
-  background: rgba(252, 225, 0, 0.07);
-  border: 1px solid rgba(252, 225, 0, 0.18);
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
   padding: 1px 7px;
   font-size: 0.7rem;
   font-family: var(--font-mono);
@@ -966,7 +963,7 @@ nav {
   border: 1px solid var(--border);
   border-top: 2px solid var(--accent);
   width: min(540px, 92vw);
-  box-shadow: var(--shadow), 0 0 80px rgba(252, 225, 0, 0.07), 0 0 0 1px rgba(0, 240, 255, 0.04) inset;
+  box-shadow: var(--shadow), 0 0 80px color-mix(in srgb, var(--accent) 7%, transparent), 0 0 0 1px color-mix(in srgb, var(--accent-2) 4%, transparent) inset;
   animation: slideUp 0.25s ease;
   display: flex;
   flex-direction: column;
@@ -999,9 +996,9 @@ nav {
 
 /* Rank display */
 .rank-display {
-  border: 1px solid rgba(252, 225, 0, 0.15);
+  border: 1px solid color-mix(in srgb, var(--accent) 15%, transparent);
   border-left: 3px solid var(--accent);
-  background: rgba(252, 225, 0, 0.03);
+  background: color-mix(in srgb, var(--accent) 3%, transparent);
   padding: 12px 20px;
   display: flex;
   flex-direction: column;
@@ -1014,7 +1011,7 @@ nav {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(252, 225, 0, 0.05), transparent);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 5%, transparent), transparent);
 }
 
 .rank-label {
@@ -1057,8 +1054,8 @@ nav {
 
 .result-card.highlight {
   border-left-color: var(--accent);
-  border-top: 1px solid rgba(252, 225, 0, 0.2);
-  background: rgba(252, 225, 0, 0.03);
+  border-top: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  background: color-mix(in srgb, var(--accent) 3%, transparent);
 }
 
 .result-val {
@@ -1099,7 +1096,7 @@ nav {
 }
 
 .name-row input:focus {
-  border-color: rgba(252, 225, 0, 0.35);
+  border-color: color-mix(in srgb, var(--accent) 35%, transparent);
   border-bottom-color: var(--accent);
 }
 
@@ -1124,7 +1121,7 @@ nav {
 .btn-accent:hover {
   background: transparent;
   color: var(--accent-3);
-  box-shadow: 0 0 16px rgba(255, 45, 120, 0.3);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--accent-3) 30%, transparent);
 }
 
 .btn-primary {
@@ -1145,7 +1142,7 @@ nav {
 .btn-primary:hover {
   background: transparent;
   color: var(--accent);
-  box-shadow: 0 0 20px rgba(252, 225, 0, 0.3);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
 .modal-actions {
@@ -1194,23 +1191,23 @@ nav {
 }
 
 .lb-header.lb-row {
-  background: rgba(252, 225, 0, 0.04);
+  background: color-mix(in srgb, var(--accent) 4%, transparent);
   color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: 0.66rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  border-bottom: 1px solid rgba(252, 225, 0, 0.1);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 10%, transparent);
 }
 
 .lb-entry {
-  border-top: 1px solid rgba(252, 225, 0, 0.04);
+  border-top: 1px solid color-mix(in srgb, var(--accent) 4%, transparent);
   transition: background 0.15s, border-color 0.15s;
 }
 
 .lb-entry:hover {
-  background: rgba(252, 225, 0, 0.03);
-  border-top-color: rgba(252, 225, 0, 0.1);
+  background: color-mix(in srgb, var(--accent) 3%, transparent);
+  border-top-color: color-mix(in srgb, var(--accent) 10%, transparent);
 }
 
 .rank-badge { font-family: var(--font-head); font-weight: 700; font-size: 0.9rem; letter-spacing: 1px; }
@@ -1286,7 +1283,7 @@ nav {
 }
 
 .custom-textarea:focus {
-  border-color: rgba(252, 225, 0, 0.3);
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
   border-bottom-color: var(--accent);
 }
 
