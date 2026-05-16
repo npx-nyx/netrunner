@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NETRUNNER TYPE // Night City Typing Test</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Boot screen ────────────────────────────────────────────── -->
+  <div id="boot-screen" class="boot-screen">
+    <div class="boot-inner">
+      <div class="boot-title">NETRUNNER</div>
+      <div class="boot-version">TYPE&nbsp;&nbsp;//&nbsp;&nbsp;v4.2.0-NIGHT_CITY</div>
+      <div class="boot-sep"></div>
+      <div class="boot-log" id="boot-log"></div>
+      <div class="boot-bar-wrap">
+        <div class="boot-bar" id="boot-bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Ambient orbs (decorative) ─────────────────────────────── -->
+  <div class="ambient-orbs" aria-hidden="true">
+    <div class="orb orb-y"></div>
+    <div class="orb orb-p"></div>
+    <div class="orb orb-c"></div>
+  </div>
+
+  <header>
+    <div class="logo" data-text="NETRUNNER">
+      <span class="logo-icon">⟁</span>
+      <span>
+        NETRUNNER
+        <span class="logo-sub">// NIGHT CITY TYPING TEST</span>
+      </span>
+    </div>
+    <nav>
+      <button class="nav-btn active" data-screen="test">Jack In</button>
+      <button class="nav-btn" data-screen="leaderboard">Rankings</button>
+      <button class="nav-btn" data-screen="settings">System</button>
+    </nav>
+  </header>
+
+  <!-- ── TEST SCREEN ─────────────────────────────────────────── -->
+  <main id="screen-test" class="screen active">
+
+    <div class="toolbar">
+      <div class="btn-group" id="diff-group">
+        <button class="pill active" data-diff="easy">Flatline</button>
+        <button class="pill" data-diff="medium">Netrunner</button>
+        <button class="pill" data-diff="hard">Blackwall</button>
+        <button class="pill" data-diff="custom">Custom</button>
+      </div>
+      <div class="toolbar-right">
+        <div class="btn-group" id="time-group">
+          <button class="pill active" data-time="30">30s</button>
+          <button class="pill" data-time="60">60s</button>
+          <button class="pill" data-time="120">120s</button>
+        </div>
+        <button class="btn-sound active" id="sound-btn" title="Toggle sound (S)">SFX</button>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat">
+        <div class="stat-val-wrap">
+          <span class="stat-val" id="wpm-live">0</span>
+          <span class="wpm-trend" id="wpm-trend"></span>
+        </div>
+        <span class="stat-lbl">WPM</span>
+      </div>
+
+      <div class="stat stat-center">
+        <div class="timer-wrap">
+          <svg class="timer-svg" viewBox="0 0 100 100">
+            <g class="ring-group">
+              <circle class="ring-bg"   cx="50" cy="50" r="42"/>
+              <circle class="ring-fill" id="ring-fill" cx="50" cy="50" r="42"
+                stroke-dasharray="263.9" stroke-dashoffset="0"/>
+            </g>
+          </svg>
+          <span class="timer-val" id="timer-live">30</span>
+        </div>
+        <span class="stat-lbl">SEC</span>
+      </div>
+
+      <div class="stat">
+        <span class="stat-val" id="acc-live">—</span>
+        <span class="stat-lbl">ACCURACY</span>
+      </div>
+    </div>
+
+    <div class="typing-card" id="typing-card">
+      <div class="combo-strip" id="combo-strip">
+        <span class="combo-val" id="combo-val">0</span>
+        <span class="combo-lbl">CHAIN</span>
+      </div>
+      <div class="text-display" id="text-display"></div>
+      <div class="input-wrapper">
+        <textarea
+          id="input-area"
+          class="input-area"
+          placeholder="Begin neural link to start the test…"
+          spellcheck="false"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          rows="2"
+        ></textarea>
+      </div>
+    </div>
+
+    <div class="test-actions">
+      <button class="btn-ghost" id="restart-btn" title="Restart (Tab)">
+        ⟳ &nbsp;RESET LINK
+      </button>
+    </div>
+
+    <p class="hint">Press <kbd>Tab</kbd> to restart &nbsp;·&nbsp; <kbd>Esc</kbd> to clear input</p>
+  </main>
+
+  <!-- ── RESULTS MODAL ───────────────────────────────────────── -->
+  <div class="overlay hidden" id="results-overlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <h2 id="modal-title">// JACK OUT</h2>
+
+      <div class="rank-display" id="rank-display">
+        <span class="rank-label">NEURAL RANK</span>
+        <span class="rank-title" id="rank-title">NETRUNNER</span>
+      </div>
+
+      <div class="results-grid">
+        <div class="result-card highlight">
+          <span class="result-val" id="res-wpm">0</span>
+          <span class="result-lbl">Words / Min</span>
+        </div>
+        <div class="result-card">
+          <span class="result-val" id="res-acc">0%</span>
+          <span class="result-lbl">Accuracy</span>
+        </div>
+        <div class="result-card">
+          <span class="result-val" id="res-chars">0</span>
+          <span class="result-lbl">Clean Chars</span>
+        </div>
+        <div class="result-card">
+          <span class="result-val" id="res-errors">0</span>
+          <span class="result-lbl">ICE Hits</span>
+        </div>
+      </div>
+
+      <div class="name-row">
+        <input type="text" id="player-name" placeholder="Enter your handle…" maxlength="24" />
+        <button class="btn-accent" id="save-btn">Upload</button>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn-primary" id="retry-btn">⟳ &nbsp;Jack In Again</button>
+        <button class="btn-ghost"   id="board-btn">View Rankings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── LEADERBOARD SCREEN ──────────────────────────────────── -->
+  <main id="screen-leaderboard" class="screen hidden">
+    <div class="section-header">
+      <h2>// Rankings</h2>
+      <button class="btn-ghost btn-sm danger" id="clear-board-btn">Wipe Data</button>
+    </div>
+
+    <div class="btn-group filter-group" id="filter-group">
+      <button class="pill active" data-filter="all">All</button>
+      <button class="pill" data-filter="easy">Flatline</button>
+      <button class="pill" data-filter="medium">Netrunner</button>
+      <button class="pill" data-filter="hard">Blackwall</button>
+      <button class="pill" data-filter="custom">Custom</button>
+    </div>
+
+    <div class="leaderboard-wrap">
+      <div class="lb-header lb-row">
+        <span>#</span>
+        <span>Handle</span>
+        <span>WPM</span>
+        <span>Accuracy</span>
+        <span>Difficulty</span>
+        <span>Time</span>
+        <span>Date</span>
+      </div>
+      <div id="lb-entries"></div>
+      <div id="lb-empty" class="empty-state hidden">
+        <p>No data jacked in yet. Complete a run to upload your score.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ── SETTINGS SCREEN ────────────────────────────────────── -->
+  <main id="screen-settings" class="screen hidden">
+    <h2 class="screen-title">// System Config</h2>
+
+    <div class="settings-block">
+      <label class="settings-label">Visual Theme</label>
+      <div class="btn-group" id="theme-group">
+        <button class="pill active" data-theme="dark">Cyberpunk</button>
+        <button class="pill" data-theme="light">Corpo</button>
+        <button class="pill" data-theme="nord">Militech</button>
+        <button class="pill" data-theme="mocha">Arasaka</button>
+      </div>
+    </div>
+
+    <div class="settings-block">
+      <label class="settings-label" for="custom-text-input">Custom Payload</label>
+      <p class="settings-desc">Paste any text to use as a typing passage. Select "Custom" difficulty on the test screen.</p>
+      <textarea
+        id="custom-text-input"
+        class="custom-textarea"
+        placeholder="Paste your data payload here (min 30 characters)…"
+        rows="7"
+        spellcheck="false"
+      ></textarea>
+      <div class="custom-actions">
+        <span class="char-count" id="custom-char-count">0 bytes</span>
+        <button class="btn-accent" id="save-custom-btn">Upload Payload</button>
+      </div>
+      <div class="custom-status" id="custom-status"></div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
