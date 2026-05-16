@@ -604,10 +604,10 @@ function resetTest() {
 // ── Supabase leaderboard ──────────────────────────────────────
 // Replace these two values after creating your Supabase project.
 // Dashboard → Project Settings → API → Project URL + anon public key
-const SUPABASE_URL      = 'YOUR_SUPABASE_URL';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const SUPABASE_URL      = 'https://lruezuigiauintzkaqzl.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_k-xmfyVvhdiPnR7JSyVjgQ_fUkLCr6G';
 
-const sbReady = SUPABASE_URL !== 'YOUR_SUPABASE_URL';
+const sbReady = !SUPABASE_URL.includes('YOUR_SUPABASE');
 const db = sbReady
   ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
   : null;
