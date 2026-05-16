@@ -601,29 +601,74 @@ function resetTest() {
   inputArea.focus();
 }
 
-// ── Leaderboard ───────────────────────────────────────────────
+// ── Supabase leaderboard ──────────────────────────────────────
+// Replace these two values after creating your Supabase project.
+// Dashboard → Project Settings → API → Project URL + anon public key
+const SUPABASE_URL      = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+const sbReady = SUPABASE_URL !== 'YOUR_SUPABASE_URL';
+const db = sbReady
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;
+
+// localStorage fallback (used when Supabase isn't configured yet)
 const STORAGE_KEY = 'ts_leaderboard';
+function localGet()       { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; } }
+function localSave(arr)   { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
 
-function getScores()       { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; } }
-function saveScores(arr)   { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
-
-function addScore(entry) {
-  const arr = getScores();
-  arr.push(entry);
-  arr.sort((a, b) => b.wpm - a.wpm || b.accuracy - a.accuracy);
-  saveScores(arr.slice(0, 100));
+async function addScore(entry) {
+  if (db) {
+    await db.from('scores').insert({
+      name:       entry.name,
+      wpm:        entry.wpm,
+      accuracy:   entry.accuracy,
+      difficulty: entry.difficulty,
+      duration:   entry.duration,
+      chars:      entry.chars,
+      date:       entry.date,
+    });
+  } else {
+    // offline fallback
+    const arr = localGet();
+    arr.push(entry);
+    arr.sort((a, b) => b.wpm - a.wpm || b.accuracy - a.accuracy);
+    localSave(arr.slice(0, 100));
+  }
 }
 
-function renderLeaderboard(filter) {
-  const all  = getScores();
-  const rows = filter === 'all' ? all : all.filter(s => s.difficulty === filter);
+async function renderLeaderboard(filter) {
+  lbEntries.innerHTML = '';
+  lbEmpty.classList.add('hidden');
+
+  // show a subtle loading state
+  const loading = document.createElement('div');
+  loading.className = 'empty-state';
+  loading.textContent = 'Fetching data from the net…';
+  lbEntries.appendChild(loading);
+
+  let rows = [];
+
+  if (db) {
+    let query = db.from('scores')
+      .select('name,wpm,accuracy,difficulty,duration,date')
+      .order('wpm', { ascending: false })
+      .order('accuracy', { ascending: false })
+      .limit(100);
+    if (filter !== 'all') query = query.eq('difficulty', filter);
+    const { data, error } = await query;
+    if (!error && data) rows = data;
+  } else {
+    const all = localGet();
+    rows = filter === 'all' ? all : all.filter(s => s.difficulty === filter);
+  }
+
   lbEntries.innerHTML = '';
 
   if (rows.length === 0) { lbEmpty.classList.remove('hidden'); return; }
-  lbEmpty.classList.add('hidden');
 
   rows.forEach((s, idx) => {
-    const row  = document.createElement('div');
+    const row = document.createElement('div');
     row.className = 'lb-row lb-entry';
     const rank = idx + 1;
     const rankClass = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : '';
@@ -747,7 +792,8 @@ $('board-btn').addEventListener('click', () => {
   showScreen('leaderboard');
 });
 
-$('save-btn').addEventListener('click', () => {
+$('save-btn').addEventListener('click', async () => {
+  const btn  = $('save-btn');
   const name = playerNameInput.value.trim() || 'Anonymous';
   state.savedName = name;
   localStorage.setItem('ts_name', name);
@@ -755,12 +801,15 @@ $('save-btn').addEventListener('click', () => {
   const r = state._lastResult;
   if (!r) return;
 
-  addScore({ name, wpm: r.wpm, accuracy: r.acc, difficulty: state.difficulty,
-             duration: state.timeLimit, date: new Date().toLocaleDateString('en-CA'), chars: r.correctChars });
-
-  const btn = $('save-btn');
-  btn.textContent = '✓ Uploaded';
+  btn.textContent = '…';
   btn.disabled    = true;
+
+  await addScore({
+    name, wpm: r.wpm, accuracy: r.acc, difficulty: state.difficulty,
+    duration: state.timeLimit, date: new Date().toLocaleDateString('en-CA'), chars: r.correctChars,
+  });
+
+  btn.textContent = '✓ Uploaded';
 });
 
 filterGroup.addEventListener('click', e => {
@@ -770,9 +819,13 @@ filterGroup.addEventListener('click', e => {
   renderLeaderboard(btn.dataset.filter);
 });
 
-$('clear-board-btn').addEventListener('click', () => {
+$('clear-board-btn').addEventListener('click', async () => {
   if (!confirm('Wipe all leaderboard data? This cannot be undone.')) return;
-  saveScores([]);
+  if (db) {
+    await db.from('scores').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+  } else {
+    localSave([]);
+  }
   const f = filterGroup.querySelector('.pill.active');
   renderLeaderboard(f ? f.dataset.filter : 'all');
 });
