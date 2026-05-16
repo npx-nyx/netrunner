@@ -36,8 +36,8 @@
 [data-theme="light"] {
   --bg:           #f0ece0;
   --surface:      #faf5e4;
-  --surface-2:    #e8e0c8;
-  --border:       rgba(180, 140, 0, 0.4);
+  --surface-2:    #ede8d4;
+  --border:       rgba(180, 140, 0, 0.35);
   --border-2:     rgba(0, 160, 200, 0.3);
   --text:         #1a1020;
   --text-muted:   #7a6a50;
@@ -53,15 +53,15 @@
   --glow-y:       0 0 10px rgba(200, 168, 0, 0.4);
   --glow-c:       0 0 10px rgba(0, 144, 184, 0.4);
   --glow-p:       0 0 10px rgba(204, 16, 96, 0.4);
-  --shadow:       0 8px 32px rgba(0,0,0,0.15);
+  --shadow:       0 8px 32px rgba(0,0,0,0.12);
 }
 
 [data-theme="nord"] {
-  --bg:           #1a1f2e;
-  --surface:      #242938;
-  --surface-2:    #2e3448;
-  --border:       rgba(136, 192, 208, 0.3);
-  --border-2:     rgba(163, 190, 140, 0.25);
+  --bg:           #161b27;
+  --surface:      #1e2433;
+  --surface-2:    #252d3f;
+  --border:       rgba(136, 192, 208, 0.25);
+  --border-2:     rgba(163, 190, 140, 0.2);
   --text:         #eceff4;
   --text-muted:   #4c566a;
   --text-sub:     #7b88a1;
@@ -76,15 +76,15 @@
   --glow-y:       0 0 12px rgba(136, 192, 208, 0.5);
   --glow-c:       0 0 12px rgba(163, 190, 140, 0.5);
   --glow-p:       0 0 12px rgba(191, 97, 106, 0.5);
-  --shadow:       0 8px 32px rgba(0,0,0,0.4);
+  --shadow:       0 8px 32px rgba(0,0,0,0.5);
 }
 
 [data-theme="mocha"] {
   --bg:           #11111b;
   --surface:      #181825;
   --surface-2:    #1e1e2e;
-  --border:       rgba(203, 166, 247, 0.25);
-  --border-2:     rgba(166, 227, 161, 0.2);
+  --border:       rgba(203, 166, 247, 0.22);
+  --border-2:     rgba(166, 227, 161, 0.18);
   --text:         #cdd6f4;
   --text-muted:   #45475a;
   --text-sub:     #6c7086;
@@ -100,6 +100,56 @@
   --glow-c:       0 0 14px rgba(166, 227, 161, 0.5);
   --glow-p:       0 0 14px rgba(243, 139, 168, 0.5);
   --shadow:       0 8px 32px rgba(0,0,0,0.6);
+}
+
+/* ── Per-theme body backgrounds ──────────────────────────────── */
+[data-theme="light"] body {
+  background:
+    radial-gradient(ellipse 60% 30% at 20% 0%,   rgba(200,168,  0, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 25% at 80% 100%,  rgba(204, 16, 96, 0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 50%,   rgba(  0,144,184, 0.04) 0%, transparent 70%),
+    linear-gradient(180deg, #f0ece0 0%, #ebe5d2 60%, #e4deca 100%);
+}
+
+[data-theme="nord"] body {
+  background:
+    radial-gradient(ellipse 60% 30% at 20% 0%,   rgba(136,192,208, 0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 25% at 80% 100%,  rgba(191, 97,106, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 50%,   rgba(163,190,140, 0.05) 0%, transparent 70%),
+    linear-gradient(180deg, #161b27 0%, #141929 50%, #121724 100%);
+}
+
+[data-theme="mocha"] body {
+  background:
+    radial-gradient(ellipse 60% 30% at 20% 0%,   rgba(203,166,247, 0.09) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 25% at 80% 100%,  rgba(243,139,168, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 50%,   rgba(166,227,161, 0.04) 0%, transparent 70%),
+    linear-gradient(180deg, #11111b 0%, #0f0f18 50%, #0d0d15 100%);
+}
+
+/* ── Per-theme grid overlay ──────────────────────────────────── */
+[data-theme="light"] body::after {
+  background-image:
+    linear-gradient(rgba(180,140,0,  0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,144,184,0.04) 1px, transparent 1px);
+}
+[data-theme="nord"] body::after {
+  background-image:
+    linear-gradient(rgba(136,192,208,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(163,190,140,0.03) 1px, transparent 1px);
+}
+[data-theme="mocha"] body::after {
+  background-image:
+    linear-gradient(rgba(203,166,247,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(166,227,161,0.03) 1px, transparent 1px);
+}
+
+/* lighter scanlines for the light theme */
+[data-theme="light"] body::before {
+  background-image: repeating-linear-gradient(
+    0deg, transparent, transparent 3px,
+    rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px
+  );
 }
 
 /* ── Base ────────────────────────────────────────────────────── */
@@ -172,14 +222,14 @@ body > .ambient-orbs ~ * { position: relative; z-index: 1; }
 .orb-y {
   width: 540px; height: 320px;
   top: -140px; left: -120px;
-  background: rgba(252, 225, 0, 0.06);
+  background: color-mix(in srgb, var(--accent)   6%, transparent);
   animation: orb-y 9s ease-in-out infinite;
 }
 
 .orb-p {
   width: 420px; height: 420px;
   bottom: -160px; right: -80px;
-  background: rgba(255, 45, 120, 0.07);
+  background: color-mix(in srgb, var(--accent-3) 7%, transparent);
   animation: orb-p 11s ease-in-out infinite;
 }
 
@@ -187,7 +237,7 @@ body > .ambient-orbs ~ * { position: relative; z-index: 1; }
   width: 360px; height: 360px;
   top: 38%; left: 44%;
   transform: translate(-50%, -50%);
-  background: rgba(0, 240, 255, 0.04);
+  background: color-mix(in srgb, var(--accent-2) 4%, transparent);
   animation: orb-c 14s ease-in-out infinite;
 }
 
@@ -263,7 +313,7 @@ body > .ambient-orbs ~ * { position: relative; z-index: 1; }
 .boot-screen {
   position: fixed;
   inset: 0;
-  background: #03020a;
+  background: var(--bg);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -407,8 +457,8 @@ header {
 nav {
   display: flex;
   gap: 2px;
-  background: rgba(8, 5, 20, 0.85);
-  border: 1px solid rgba(252, 225, 0, 0.12);
+  background: var(--surface);
+  border: 1px solid var(--border);
   padding: 4px;
 }
 
@@ -466,8 +516,8 @@ nav {
 }
 
 .pill {
-  background: rgba(8, 5, 20, 0.9);
-  border: 1px solid rgba(252, 225, 0, 0.12);
+  background: var(--surface);
+  border: 1px solid var(--border);
   color: var(--text-muted);
   font-family: var(--font-ui);
   font-size: 0.78rem;
@@ -510,8 +560,8 @@ nav {
 
 /* Sound button */
 .btn-sound {
-  background: rgba(8, 5, 20, 0.9);
-  border: 1px solid rgba(252, 225, 0, 0.12);
+  background: var(--surface);
+  border: 1px solid var(--border);
   color: var(--text-muted);
   font-family: var(--font-mono);
   font-size: 0.68rem;
@@ -537,9 +587,9 @@ nav {
   align-items: center;
   gap: 0;
   text-align: center;
-  background: rgba(8, 5, 20, 0.88);
-  border: 1px solid rgba(252, 225, 0, 0.1);
-  border-top: 1px solid rgba(252, 225, 0, 0.25);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--accent);
   position: relative;
 }
 
@@ -660,9 +710,9 @@ nav {
 /* ── Typing card ─────────────────────────────────────────────── */
 .typing-card {
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(100, 60, 200, 0.06) 0%, transparent 70%),
-    rgba(6, 4, 14, 0.98);
-  border: 1px solid rgba(252, 225, 0, 0.12);
+    radial-gradient(ellipse 80% 60% at 50% 0%, color-mix(in srgb, var(--accent-2) 5%, transparent) 0%, transparent 70%),
+    var(--surface);
+  border: 1px solid var(--border);
   padding: 20px 28px 20px;
   display: flex;
   flex-direction: column;
@@ -758,7 +808,7 @@ nav {
   font-family: var(--font-mono);
   font-size: 1.22rem;
   line-height: 1.95;
-  color: rgba(190, 170, 238, 0.6);
+  color: var(--text-sub);
   letter-spacing: 0.025em;
   text-shadow: 0 0 32px rgba(130, 90, 210, 0.18);
   max-height: 200px;
@@ -803,7 +853,7 @@ nav {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 30px;
-  background: linear-gradient(rgba(6, 4, 14, 1), transparent);
+  background: linear-gradient(var(--surface), transparent);
   pointer-events: none;
   z-index: 1;
 }
@@ -814,7 +864,7 @@ nav {
   position: absolute;
   bottom: 0; left: 0; right: 0;
   height: 44px;
-  background: linear-gradient(transparent, rgba(6, 4, 14, 0.96));
+  background: linear-gradient(transparent, var(--surface));
   pointer-events: none;
   z-index: 1;
 }
@@ -824,9 +874,9 @@ nav {
 
 .input-area {
   width: 100%;
-  background: rgba(10, 6, 22, 0.98);
-  border: 1px solid rgba(252, 225, 0, 0.12);
-  border-bottom: 2px solid rgba(252, 225, 0, 0.28);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-bottom: 2px solid color-mix(in srgb, var(--accent) 40%, transparent);
   color: var(--text);
   font-family: var(--font-mono);
   font-size: 1rem;
@@ -912,8 +962,8 @@ nav {
 .overlay.hidden { display: none; }
 
 .modal {
-  background: rgba(6, 4, 14, 0.99);
-  border: 1px solid rgba(252, 225, 0, 0.15);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-top: 2px solid var(--accent);
   width: min(540px, 92vw);
   box-shadow: var(--shadow), 0 0 80px rgba(252, 225, 0, 0.07), 0 0 0 1px rgba(0, 240, 255, 0.04) inset;
@@ -995,9 +1045,9 @@ nav {
 }
 
 .result-card {
-  background: rgba(14, 10, 28, 0.95);
-  border: 1px solid rgba(252, 225, 0, 0.08);
-  border-left: 2px solid rgba(0, 240, 255, 0.25);
+  background: var(--surface-2);
+  border: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+  border-left: 2px solid color-mix(in srgb, var(--accent-2) 40%, transparent);
   padding: 14px;
   text-align: center;
   display: flex;
@@ -1035,9 +1085,9 @@ nav {
 
 .name-row input {
   flex: 1;
-  background: rgba(10, 6, 22, 0.98);
-  border: 1px solid rgba(252, 225, 0, 0.12);
-  border-bottom: 2px solid rgba(252, 225, 0, 0.22);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-bottom: 2px solid color-mix(in srgb, var(--accent) 35%, transparent);
   color: var(--text);
   font-family: var(--font-ui);
   font-size: 0.92rem;
@@ -1125,9 +1175,9 @@ nav {
 .filter-group { margin-top: -4px; }
 
 .leaderboard-wrap {
-  background: rgba(6, 4, 14, 0.98);
-  border: 1px solid rgba(252, 225, 0, 0.08);
-  border-top: 2px solid rgba(252, 225, 0, 0.28);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--accent);
   overflow: hidden;
 }
 
@@ -1195,9 +1245,9 @@ nav {
 
 /* ── Settings ────────────────────────────────────────────────── */
 .settings-block {
-  background: rgba(6, 4, 14, 0.98);
-  border: 1px solid rgba(252, 225, 0, 0.08);
-  border-top: 2px solid rgba(252, 225, 0, 0.22);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--accent);
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -1221,9 +1271,9 @@ nav {
 
 .custom-textarea {
   width: 100%;
-  background: rgba(10, 6, 22, 0.98);
-  border: 1px solid rgba(252, 225, 0, 0.1);
-  border-bottom: 2px solid rgba(252, 225, 0, 0.18);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-bottom: 2px solid color-mix(in srgb, var(--accent) 30%, transparent);
   color: var(--text);
   font-family: var(--font-mono);
   font-size: 0.9rem;
