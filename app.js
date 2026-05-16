@@ -2,44 +2,28 @@
 
 // ── Text corpus ───────────────────────────────────────────────
 
-// Easy: randomised word pool — generates fresh text every run
-const WORDS_EASY = [
-  // high-frequency English — dark side of the dictionary
-  'the', 'and', 'for', 'are', 'but', 'not', 'you', 'all', 'can', 'had',
-  'her', 'was', 'one', 'our', 'out', 'day', 'get', 'has', 'him', 'his',
-  'how', 'man', 'new', 'now', 'old', 'see', 'two', 'way', 'who', 'did',
-  'its', 'let', 'put', 'say', 'she', 'too', 'use', 'run', 'hot', 'cut',
-  'that', 'this', 'with', 'have', 'from', 'they', 'will', 'what', 'when',
-  'been', 'much', 'some', 'time', 'long', 'down', 'into', 'over', 'just',
-  'know', 'take', 'than', 'them', 'then', 'well', 'also', 'back', 'last',
-  'make', 'only', 'come', 'here', 'like', 'look', 'more', 'name', 'next',
-  'need', 'feel', 'find', 'hand', 'keep', 'left', 'live', 'move', 'show',
-  'turn', 'walk', 'work', 'year', 'away', 'call', 'came', 'each', 'give',
-  'hold', 'kind', 'lead', 'line', 'link', 'lose', 'lost', 'mean', 'mind',
-  'open', 'part', 'past', 'plan', 'real', 'rest', 'road', 'room', 'same',
-  'save', 'side', 'stay', 'stop', 'tell', 'true', 'wait', 'want', 'word',
-  'zero', 'zone', 'even', 'once', 'while', 'these', 'those', 'there',
-  'think', 'still', 'small', 'large', 'place', 'right', 'after', 'again',
-  'never', 'light', 'world', 'night', 'point', 'first', 'three', 'often',
-  'start', 'clean', 'close', 'clear', 'break', 'bring', 'build', 'check',
-  'count', 'drive', 'enter', 'focus', 'force', 'front', 'going', 'ready',
-  'reach', 'solid', 'sound', 'space', 'speed', 'stand', 'touch', 'track',
-  'trust', 'watch', 'write', 'young', 'begin', 'other', 'could', 'every',
-  // gritty and dark
-  'dead', 'kill', 'fear', 'pain', 'dark', 'cold', 'void', 'fall', 'fail',
-  'hate', 'rage', 'grim', 'risk', 'trap', 'prey', 'hunt', 'scar', 'dirt',
-  'dust', 'rust', 'ruin', 'ash', 'fog', 'rot', 'slag', 'guts', 'rats',
-  'debt', 'doom', 'dusk', 'burn', 'lies', 'fade', 'leak', 'harm', 'flaw',
-  'haul', 'drag', 'drop', 'flee', 'fall', 'ache', 'bite', 'bleed', 'bury',
-  // cyberpunk core
-  'jack', 'chip', 'wire', 'data', 'code', 'deck', 'core', 'hack', 'scan',
-  'node', 'byte', 'sync', 'grid', 'port', 'corp', 'edge', 'neon', 'ghost',
-  'steel', 'black', 'chrome', 'cyber', 'rogue', 'spike', 'flash', 'shell',
-  'pulse', 'surge', 'trace', 'drift', 'city', 'street', 'alley', 'block',
-  'crew', 'deal', 'cash', 'lock', 'rig', 'blade', 'bolt', 'rush', 'link',
-  'loop', 'ping', 'load', 'feed', 'mark', 'slot', 'rack', 'hard', 'soft',
-  'fast', 'deep', 'high', 'wide', 'flat', 'junk', 'slum', 'smog', 'gang',
-  'skin', 'meat', 'wire', 'gun', 'net', 'ice', 'burn', 'fix', 'scam',
+// Easy: short story fragments — simple words, coherent prose, dark atmosphere
+const PASSAGES_EASY = [
+  'the rain hit the street and did not stop. she pulled her coat tight and kept walking. a screen on the wall showed a face she did not know. the face smiled. she did not smile back.',
+  'he found the chip in an old coat pocket. it was small and black with no markings on it. he did not know what was on it and was not sure he wanted to find out. he kept it anyway.',
+  'the club was loud and very dark. lights moved fast over the crowd. she found a seat in the back and watched the door. at last he walked in. she did not wave.',
+  'the car drove itself down the long road. he sat in the back and looked out the window at the city. it was big and bright and cold. he had not been here before. he was not sure he should be here now.',
+  'she typed fast and did not stop. the screen filled up with code line by line. outside the window the sun came up slow. she had been at it all night. the job was almost done.',
+  'the old man sold data out of a small shop near the bridge. he knew more than he let on. most people who came to him left with what they needed. some of them did not leave at all.',
+  'two guards stood at the door and did not move. she walked up to them and held out a card. one of them looked at it for a long time. then they let her in without a word.',
+  'he woke up on the floor of a room he had never seen. his arm hurt and his head was worse. on the table next to him was a glass of water and a note. the note said one thing: run.',
+  'the market ran all day and all night under the old bridge. you could buy most things there if you knew who to ask. she knew who to ask. she had been coming here for years.',
+  'the job was simple on paper. get in, take the file, get out. no one was meant to be there at that time of night. someone was there. the job stopped being simple very fast.',
+  'he had not slept in two days. his eyes hurt and his hands would not stop moving. he looked at the screen and the screen looked back. somewhere out there the answer was waiting. he just had to find it first.',
+  'she sat on the roof and looked out at the city below. the lights went on for as far as she could see. it was the kind of place that took everything from you and made you feel glad it did. she had grown up here. she was not sure she could leave.',
+  'the signal came in at three in the morning. short, clean, no name attached to it. just a set of numbers and a place. he wrote them down on the back of his hand and went back to sleep. in the morning the numbers were gone. he had washed them off without thinking.',
+  'they told her the work was safe. no one would know, no one would look. she did the work and kept her head down. two weeks later someone knew and someone was looking. she was already gone by then.',
+  'the door at the end of the hall was always locked. he had walked past it every day for a year and never thought much about it. one night he saw the light on under it. the next day the door was gone. just a wall where it had been.',
+  'she had three names and used them all at different times. none of them were the name she was born with. that name was gone now, put away in a place she did not go back to. it was safer that way for everyone.',
+  'the power went out and the whole block went dark. for a moment no one moved. then the backup lights came on, dim and red, and people started to breathe again. someone in the back of the room laughed. no one else did.',
+  'he owed money to the wrong kind of people. not a lot of money, which made it worse in a way. a big debt they might let go. a small one they would not forget. he had three days to fix it and only one idea.',
+  'the food at the stand on the corner was not good but it was hot and it was there. she ate standing up, watching the street. a man across the road was watching her back. she finished eating, dropped the cup, and walked the other way without hurrying.',
+  'they had been running the same route for six years. same streets, same times, same faces at the same windows. one morning a window that was always dark had a light in it. neither of them said anything. both of them changed the route.',
 ];
 
 // Medium: large sentence pool — picks 3–6 per run and joins them
@@ -328,13 +312,8 @@ function loadText() {
   }
 
   if (state.difficulty === 'easy') {
-    // Fresh random word sequence every run — never the same twice
-    const count = Math.max(55, Math.ceil(state.timeLimit * 1.1));
-    const words = [];
-    for (let i = 0; i < count; i++) {
-      words.push(WORDS_EASY[Math.floor(Math.random() * WORDS_EASY.length)]);
-    }
-    state.text = words.join(' ');
+    const count = state.timeLimit <= 30 ? 1 : state.timeLimit <= 60 ? 2 : 3;
+    state.text = shuffled(PASSAGES_EASY).slice(0, count).join(' ');
     return;
   }
 
