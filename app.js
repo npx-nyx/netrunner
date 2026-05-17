@@ -331,7 +331,7 @@ function loadText() {
 // ── Render text display ───────────────────────────────────────
 function renderTextDisplay() {
   textDisplay.innerHTML = state.text.split('').map((ch, i) => {
-    const c = ch === ' ' ? '&nbsp;' : ch;
+    const c = ch === ' ' ? '&nbsp;' : escHtml(ch);
     return `<span class="char" data-i="${i}">${c}</span>`;
   }).join('');
 }
@@ -529,6 +529,9 @@ function showResults(wpm, acc, correctChars, errors) {
   rankEl.style.textShadow = rank.color.includes('accent') ? 'var(--glow-y)' : '';
 
   playerNameInput.value = state.savedName;
+  const saveBtn = $('save-btn');
+  saveBtn.textContent = 'Upload';
+  saveBtn.disabled    = false;
   resultsOverlay.classList.remove('hidden');
 
   // Animate result numbers after a short delay
@@ -651,20 +654,21 @@ async function renderLeaderboard(filter) {
     row.className = 'lb-row lb-entry';
     const rank = idx + 1;
     const rankClass = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : '';
+    const diff = escHtml(s.difficulty || '');
     row.innerHTML = `
       <span class="rank-badge ${rankClass}">${rank}</span>
       <span>${escHtml(s.name || 'Anonymous')}</span>
-      <span><strong>${s.wpm}</strong></span>
-      <span>${s.accuracy}%</span>
-      <span><span class="diff-badge ${s.difficulty}">${s.difficulty}</span></span>
-      <span>${s.duration}s</span>
-      <span>${s.date}</span>`;
+      <span><strong>${escHtml(s.wpm)}</strong></span>
+      <span>${escHtml(s.accuracy)}%</span>
+      <span><span class="diff-badge ${diff}">${diff}</span></span>
+      <span>${escHtml(s.duration)}s</span>
+      <span>${escHtml(s.date)}</span>`;
     lbEntries.appendChild(row);
   });
 }
 
 function escHtml(str) {
-  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 // ── Navigation ────────────────────────────────────────────────
@@ -798,16 +802,6 @@ filterGroup.addEventListener('click', e => {
   renderLeaderboard(btn.dataset.filter);
 });
 
-$('clear-board-btn').addEventListener('click', async () => {
-  if (!confirm('Wipe all leaderboard data? This cannot be undone.')) return;
-  if (db) {
-    await db.from('scores').delete().neq('id', '00000000-0000-0000-0000-000000000000');
-  } else {
-    localSave([]);
-  }
-  const f = filterGroup.querySelector('.pill.active');
-  renderLeaderboard(f ? f.dataset.filter : 'all');
-});
 
 themeGroup.addEventListener('click', e => {
   const btn = e.target.closest('.pill');
