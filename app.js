@@ -597,6 +597,7 @@ const db = sbReady
 // localStorage fallback (used when Supabase isn't configured yet)
 const STORAGE_KEY = 'ts_leaderboard';
 function localGet()       { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; } }
+function localGet()       { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; } }
 function localSave(arr)   { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
 
 async function addScore(entry) {

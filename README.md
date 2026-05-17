@@ -1,7 +1,7 @@
 # NETRUNNER TYPE
 ### // Night City Typing Test
 
-**[netrunner-typetest.vercel.app](https://netrunner-typetest.vercel.app)**
+**[npx-nyx.github.io/netrunner](https://npx-nyx.github.io/netrunner)**
 
 A cyberpunk-themed typing speed test built with vanilla HTML, CSS, and JavaScript. No frameworks. No build step. Just jack in and type.
 
