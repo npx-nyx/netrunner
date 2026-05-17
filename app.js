@@ -228,9 +228,7 @@ const state = {
   timeLeft:        60,
   totalTyped:      0,
   errorKeystrokes: 0,
-  wpmHistory:      [],
   combo:           0,
-  maxCombo:        0,
   customText:      localStorage.getItem('ts_custom') || '',
   savedName:       localStorage.getItem('ts_name')   || '',
   sound:           localStorage.getItem('ts_sound') !== 'off',
@@ -407,7 +405,6 @@ function refreshStats() {
 function updateCombo(correct) {
   if (correct) {
     state.combo++;
-    state.maxCombo = Math.max(state.maxCombo, state.combo);
   } else {
     state.combo = 0;
   }
@@ -555,7 +552,6 @@ function resetTest() {
   state.totalTyped      = 0;
   state.errorKeystrokes = 0;
   state._prevLen        = 0;
-  state.wpmHistory      = [];
   state.combo           = 0;
   _lastTrendWpm         = 0;
   _trendSample          = 0;
@@ -584,8 +580,6 @@ function resetTest() {
 }
 
 // ── Supabase leaderboard ──────────────────────────────────────
-// Replace these two values after creating your Supabase project.
-// Dashboard → Project Settings → API → Project URL + anon public key
 const SUPABASE_URL      = 'https://lruezuigiauintzkaqzl.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_k-xmfyVvhdiPnR7JSyVjgQ_fUkLCr6G';
 
@@ -594,11 +588,9 @@ const db = sbReady
   ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
   : null;
 
-// localStorage fallback (used when Supabase isn't configured yet)
 const STORAGE_KEY = 'ts_leaderboard';
-function localGet()       { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; } }
-function localGet()       { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; } }
-function localSave(arr)   { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
+function localGet()     { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; } }
+function localSave(arr) { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
 
 async function addScore(entry) {
   if (db) {
@@ -802,7 +794,6 @@ filterGroup.addEventListener('click', e => {
   activatePill(filterGroup, `[data-filter="${btn.dataset.filter}"]`);
   renderLeaderboard(btn.dataset.filter);
 });
-
 
 themeGroup.addEventListener('click', e => {
   const btn = e.target.closest('.pill');

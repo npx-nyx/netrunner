@@ -918,14 +918,6 @@ nav {
   box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
-.btn-ghost.danger:hover {
-  color: var(--incorrect);
-  border-color: var(--incorrect);
-  box-shadow: 0 0 16px color-mix(in srgb, var(--incorrect) 20%, transparent);
-}
-
-.btn-sm { font-size: 0.75rem; padding: 5px 14px; }
-
 .hint {
   text-align: center;
   font-family: var(--font-mono);
